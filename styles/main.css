@@ -10,7 +10,7 @@ body {
 
 header {
   /* height: 45vh; */
-  background-image: url("/assets/header-background.png");
+  background-image: url("../assets/header-background.png");
   background-repeat: no-repeat;
   background-size: auto 100vw;
   background-size: cover;
@@ -33,15 +33,27 @@ h2 {
   color: rgb(240, 217, 9);
 }
 
+h3 {
+  padding: 0.5rem;
+  letter-spacing: 0.3rem;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.603)
+}
+
+li {
+  list-style: none;
+  padding: 0.2rem;
+  letter-spacing: 0.1rem;
+}
+
 main {
   display: flex;
   justify-content: center;
 }
 
 section {
-  margin: -3rem 4rem;
+  margin: -5rem 4rem 4rem 4rem;
   width: 35vh;
-  height: 60vh;
   background-color: rgb(165, 165, 165);
   border-radius: 0.8rem 0.8rem 0 0;
 }
@@ -74,11 +86,27 @@ section article:first-child {
 
 .paginator {
   align-self: flex-end;
-  margin: auto auto 0.5rem auto;
+  margin: auto;
+  padding: 0.5rem;
 }
 
 .paginator span {
   cursor: pointer;
   font-size: 2rem;
   margin: 0 1rem 0 1rem;
+}
+
+.characters li {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
+.characters li:nth-child(2n+1){
+  background-color: grey;
+  color: rgba(245, 245, 245, 0.75);
+}
+
+.characters li:nth-child(2n){
+  background-color: rgba(245, 245, 245, 0.75);
+  color: rgba(0, 0, 0, 0.9);
 }
