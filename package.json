@@ -1,0 +1,23 @@
+{
+  "name": "slutprojekt-native-javascript",
+  "version": "1.0.0",
+  "description": "star wars catalog project",
+  "main": "scripts/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JesperSkold/slutprojekt-native-javascript.git"
+  },
+  "keywords": [
+    "[\"Star",
+    "Wars\"]"
+  ],
+  "author": "Oskar and Jesper",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JesperSkold/slutprojekt-native-javascript/issues"
+  },
+  "homepage": "https://github.com/JesperSkold/slutprojekt-native-javascript#readme"
+}
