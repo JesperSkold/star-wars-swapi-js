@@ -54,9 +54,9 @@ main {
 }
 
 section {
-  min-height: 62vh;
-  margin: -3rem 4rem 4rem 4rem;
-  width: 45vh;
+  height: 65vh;
+  margin: -3rem 2rem 4rem 2rem;
+  min-width: 45vh;
   background-color: rgb(165, 165, 165);
   border-radius: 0.8rem 0.8rem 0 0;
 }
@@ -182,4 +182,23 @@ content: "▸";
 color: white;
 height: 1rem;
 margin-top: 0.2rem;
+}
+
+.infoTabs {
+display: flex;
+justify-content: space-evenly;
+}
+
+.infoTabs button {
+  padding: 0.8rem 0.5rem;
+  min-width: 20%;
+  color: goldenrod;
+  background-color: rgba(245, 245, 245, 0.75);
+  border: none;
+  border-radius: 0.2rem 0.2rem 0 0;
+}
+
+.infoTabs button:focus {
+  background-color: grey;
+
 }
