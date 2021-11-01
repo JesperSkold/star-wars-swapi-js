@@ -15,7 +15,7 @@ header {
   background-size: cover;
   display: flex;
   align-items: center;
-  padding:8rem;
+  padding:6rem;
   background-position: center center;
 }
 
@@ -54,9 +54,9 @@ main {
 }
 
 section {
-  height: 50vh;
-  margin: -5rem 4rem 4rem 4rem;
-  width: 35vh;
+  min-height: 62vh;
+  margin: -3rem 4rem 4rem 4rem;
+  width: 45vh;
   background-color: rgb(165, 165, 165);
   border-radius: 0.8rem 0.8rem 0 0;
 }
@@ -68,6 +68,8 @@ section:first-child {
 
 .characterBackground {
   background-color: rgb(87, 86, 86);
+  box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.6);
+  margin-bottom: 0.2rem;
 }
 
 .detailsBackground {
@@ -127,6 +129,7 @@ section:nth-of-type(2){
 .characters li {
   font-size: 1.2rem;
   padding: 0.5rem;
+  transition: background-color 0.5s, padding 0.7s;
 }
 
 .characters li:nth-child(2n+1){
@@ -166,4 +169,17 @@ section:nth-of-type(2){
   100% {
     transform: rotate(360deg);
   }
+}
+
+.characters .clickedChar {
+  background-color: rgba(0, 0, 0, 0.801) !important;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  color: rgba(245, 245, 245, 0.75)! important;
+}
+
+.clickedChar::after {
+content: "▸";
+color: white;
+height: 1rem;
+margin-top: 0.2rem;
 }

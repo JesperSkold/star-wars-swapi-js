@@ -13,7 +13,18 @@ renderCharacters = (counter) => {
         characterList.insertAdjacentHTML("beforeend", `
             <li>${char.name}</li>`)
         document.querySelector("li:last-of-type").addEventListener("click", (e) => {
-          // console.log(e)
+
+          if (document.querySelector("li.clickedChar")) {
+            document.querySelector("li.clickedChar").classList.remove("clickedChar")
+          }
+          // const liList = document.querySelectorAll("li")
+          // console.log(liList)
+          // for(let li of liList){
+          //   console.log(li)
+          //   li.classList.remove(".clickedChar")
+          // }
+          // document.querySelector("li:last-of-type").classList.remove("clickedChar")
+          e.target.classList.add("clickedChar")
           // e.target.insertAdjacentHTML("beforeend", `
           // <span>&#9657</span>
           // `)
