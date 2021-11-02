@@ -56,7 +56,7 @@ main {
 section {
   height: 65vh;
   margin: -3rem 2rem 4rem 2rem;
-  min-width: 45vh;
+  width: 48vh;
   background-color: rgb(165, 165, 165);
   border-radius: 0.8rem 0.8rem 0 0;
 }
@@ -90,6 +90,10 @@ section:first-child {
   background-color: grey;
   flex: 1;
   color: rgba(255, 255, 255, 0.849);
+}
+
+.infoScroll {
+  overflow-y: scroll;
 }
 
 .charDetails {
@@ -196,9 +200,9 @@ justify-content: space-evenly;
   background-color: rgba(245, 245, 245, 0.75);
   border: none;
   border-radius: 0.2rem 0.2rem 0 0;
+  cursor: pointer;
 }
 
-.infoTabs button:focus {
+/* .infoTabs button:focus {
   background-color: grey;
-
-}
+} */
