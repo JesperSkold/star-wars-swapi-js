@@ -115,13 +115,17 @@ section:nth-of-type(2){
 }
 
 .paginator span {
-  cursor: pointer;
   font-size: 2rem;
   margin: 0 1rem 0 1rem;
   
 }
 
+.nextBtn {
+  cursor: pointer;
+}
+
 .prevBtn {
+  cursor: pointer;
   visibility: hidden;
 }
 
@@ -203,6 +207,6 @@ justify-content: space-evenly;
   cursor: pointer;
 }
 
-/* .infoTabs button:focus {
+.infoTabs .infoTabBtns {
   background-color: grey;
-} */
+}

@@ -1,9 +1,5 @@
-renderCharacters = (counter) => {
+renderCharacters = (counter=1) => {
   const characterList = document.querySelector(".characters");
-  if (counter === undefined) {
-    counter = 1
-  }
-
   characterList.innerHTML = '<div class="lds-dual-ring"></div>'
   fetch(`https://swapi.dev/api/people/?page=${counter}`)
     .then((response) => response.json())
@@ -13,16 +9,19 @@ renderCharacters = (counter) => {
         characterList.insertAdjacentHTML("beforeend", `
             <li>${char.name}</li>`)
         document.querySelector("li:last-of-type").addEventListener("click", (e) => {
-          if (document.querySelector("li.clickedChar")) {
-            document.querySelector("li.clickedChar").classList.remove("clickedChar")
-          }
+          removeUniqueClass("clickedChar")
           e.target.classList.add("clickedChar")
           renderCharInfo(char)
-
         })
       }
     })
 };
+
+removeUniqueClass = (className) => {
+  if(document.querySelector("."+className)){
+    document.querySelector("."+className).classList.remove(className)
+  }
+}
 
 renderCharInfo = (char) => {
   const charContainer = document.querySelector(".charDetails")
@@ -39,7 +38,6 @@ renderCharInfo = (char) => {
     <li>Birth Year: ${char.birth_year}</li>
     <li>Gender: ${char.gender}</li>
     `)
-
   document.querySelector(".infoTabs").innerHTML = `
     <button>Planet</button>
     <button>Species</button>
@@ -55,14 +53,11 @@ renderCharInfo = (char) => {
 renderPlanet = (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const planetBtn = document.querySelector(".infoTabs button:nth-of-type(1)")
-  planetBtn.style.backgroundColor = "grey"
+  planetBtn.classList.add("infoTabBtns")
   planetBtn.addEventListener("click", () => {
     planetsContainer.classList.remove("infoScroll")
-    const otherInfoButtons = document.querySelectorAll(".infoTabs button")
-    otherInfoButtons[1].style.backgroundColor = "white"
-    otherInfoButtons[2].style.backgroundColor = "white"
-    otherInfoButtons[3].style.backgroundColor = "white"
-    planetBtn.style.backgroundColor = "grey"
+    removeUniqueClass("infoTabBtns")
+    planetBtn.classList.add("infoTabBtns")
     planetsContainer.innerHTML = '<div class="lds-dual-ring"></div>'
     fetch(char.homeworld).then((response) => response.json()).then((data => {
       console.log(data)
@@ -85,11 +80,8 @@ renderSpecies = (char) => {
   const speciesBtn = document.querySelector(".infoTabs button:nth-of-type(2)")
   speciesBtn.addEventListener("click", () => {
     planetsContainer.classList.remove("infoScroll")
-    speciesBtn.style.backgroundColor = "grey"
-    const otherInfoButtons = document.querySelectorAll(".infoTabs button")
-    otherInfoButtons[0].style.backgroundColor = "white"
-    otherInfoButtons[2].style.backgroundColor = "white"
-    otherInfoButtons[3].style.backgroundColor = "white"
+    removeUniqueClass("infoTabBtns")
+    speciesBtn.classList.add("infoTabBtns")
     planetsContainer.innerHTML = '<div class="lds-dual-ring"></div>'
     console.log(char.species)
     if (char.species.length > 0) {
@@ -117,11 +109,8 @@ renderVehicles = (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const vehiclesBtn = document.querySelector(".infoTabs button:nth-of-type(3)")
   vehiclesBtn.addEventListener("click", () => {
-    const otherInfoButtons = document.querySelectorAll(".infoTabs button")
-    otherInfoButtons[0].style.backgroundColor = "white"
-    otherInfoButtons[1].style.backgroundColor = "white"
-    otherInfoButtons[3].style.backgroundColor = "white"
-    vehiclesBtn.style.backgroundColor = "grey"
+    removeUniqueClass("infoTabBtns")
+    vehiclesBtn.classList.add("infoTabBtns")
     planetsContainer.innerHTML = ""
     planetsContainer.classList.add("infoScroll")
     for (const vehicle of char.vehicles) {
@@ -131,12 +120,12 @@ renderVehicles = (char) => {
         <h3>Name: ${data.name} </h3>
         <li>Model: ${data.model} </li>
         <li>Manufacturer: ${data.manufacturer} </li>
-        <li>Cost_in_credits: ${data.cost_in_credits} </li>
+        <li>Cost in credits: ${data.cost_in_credits} </li>
         <li>Length: ${data.length} </li>
-        <li>Max_atmosphering_speed: ${data.max_atmosphering_speed} </li>
+        <li>Max atmosphering speed: ${data.max_atmosphering_speed} </li>
         <li>Crew: ${data.crew} </li>
         <li>Passengers: ${data.passengers} </li>
-        <li>Cargo_capacity: ${data.cargo_capacity} </li>
+        <li>Cargo capacity: ${data.cargo_capacity} </li>
         <li>Consumables: ${data.consumables} </li>`
       })
     }
@@ -147,26 +136,22 @@ renderStarships = (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const starShipBtn = document.querySelector(".infoTabs button:nth-of-type(4)")
   starShipBtn.addEventListener("click", () => {
-    const otherInfoButtons = document.querySelectorAll(".infoTabs button")
-    otherInfoButtons[0].style.backgroundColor = "white"
-    otherInfoButtons[1].style.backgroundColor = "white"
-    otherInfoButtons[2].style.backgroundColor = "white"
-    starShipBtn.style.backgroundColor = "grey"
+    removeUniqueClass("infoTabBtns")
+    starShipBtn.classList.add("infoTabBtns")
     planetsContainer.innerHTML = ""
     planetsContainer.classList.add("infoScroll")
     for (const starship of char.starships) {
-      console.log(starship)
       fetch(starship).then((response) => response.json()).then((data) => {
         planetsContainer.innerHTML += `
         <h3>Name: ${data.name} </h3>
         <li>Model: ${data.model} </li>
         <li>Manufacturer: ${data.manufacturer} </li>
-        <li>Cost_in_credits: ${data.cost_in_credits} </li>
+        <li>Cost in credits: ${data.cost_in_credits} </li>
         <li>Length: ${data.length} </li>
-        <li>Max_atmosphering_speed: ${data.max_atmosphering_speed} </li>
+        <li>Max atmosphering speed: ${data.max_atmosphering_speed} </li>
         <li>Crew: ${data.crew} </li>
         <li>Passengers: ${data.passengers} </li>
-        <li>Cargo_capacity: ${data.cargo_capacity} </li>
+        <li>Cargo capacity: ${data.cargo_capacity} </li>
         <li>Consumables: ${data.consumables} </li>
         <li>Hyperdrive rating: ${data.hyperdrive_rating} </li>
         <li>MGLT: ${data.MGLT} </li>
@@ -192,7 +177,6 @@ paginator = () => {
     }
     renderCharacters(counter)
   })
-
 
   prevBtn.addEventListener("click", () => {
     counter--
