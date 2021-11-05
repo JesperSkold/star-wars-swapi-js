@@ -1,4 +1,3 @@
-
 let loadingFetch = false
 const cachedCharacters = {}
 const cachedPlanets = {}
@@ -110,20 +109,24 @@ renderPlanet = async (char) => {
   const planetBtn = document.querySelector(".infoTabs button:nth-of-type(1)")
   planetBtn.classList.add("infoTabBtns")
   planetBtn.addEventListener("click", async () => {
-    planetsContainer.classList.remove("infoScroll")
-    removeUniqueClass("infoTabBtns")
-    planetBtn.classList.add("infoTabBtns")
-    planetsContainer.innerHTML = '<div class="lds-dual-ring"></div>'
-    const currentPlanet = await getPlanets(char)
-    planetsContainer.innerHTML = `
-        <h3>${currentPlanet.name}</h3>
-        <li>Rotation period: ${currentPlanet.rotation_period}</li>
-        <li>Orbital period: ${currentPlanet.orbital_period}</li>
-        <li>Diameter: ${currentPlanet.diameter}</li>
-        <li>Climate: ${currentPlanet.climate}</li>
-        <li>Gravity: ${currentPlanet.gravity}</li>
-        <li>Terrain: ${currentPlanet.terrain}</li>      
-        `
+    if (!loadingFetch) {
+      loadingFetch = true
+      planetsContainer.classList.remove("infoScroll")
+      removeUniqueClass("infoTabBtns")
+      planetBtn.classList.add("infoTabBtns")
+      planetsContainer.innerHTML = '<div class="lds-dual-ring"></div>'
+      const currentPlanet = await getPlanets(char)
+      planetsContainer.innerHTML = `
+          <h3>${currentPlanet.name}</h3>
+          <li>Rotation period: ${currentPlanet.rotation_period}</li>
+          <li>Orbital period: ${currentPlanet.orbital_period}</li>
+          <li>Diameter: ${currentPlanet.diameter}</li>
+          <li>Climate: ${currentPlanet.climate}</li>
+          <li>Gravity: ${currentPlanet.gravity}</li>
+          <li>Terrain: ${currentPlanet.terrain}</li>      
+          `
+      loadingFetch = false
+    }
   })
   document.querySelector(".infoTabs button:nth-of-type(1)").click()
 }
@@ -156,25 +159,29 @@ renderSpecies = async (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const speciesBtn = document.querySelector(".infoTabs button:nth-of-type(2)")
   speciesBtn.addEventListener("click", async () => {
-    planetsContainer.classList.remove("infoScroll")
-    removeUniqueClass("infoTabBtns")
-    speciesBtn.classList.add("infoTabBtns")
-    planetsContainer.innerHTML = '<div class="lds-dual-ring"></div>'
-    const currentSpecie = await getSpecies(char)
-    if (!currentSpecie) {
-      planetsContainer.innerHTML = `<h3>Unknown</h3>`
-    } else {
-      planetsContainer.innerHTML = `
-          <h3>Name: ${currentSpecie.name}</h3>
-          <li>classsification: ${currentSpecie.classification}</li>
-          <li>Designation: ${currentSpecie.designation}</li>
-          <li>Average height: ${currentSpecie.average_height}</li>
-          <li>Skin colors: ${currentSpecie.skin_colors}</li>
-          <li>Hair colors: ${currentSpecie.hair_colors}</li>
-          <li>Eye color: ${currentSpecie.eye_colors}</li>
-          <li>Average lifespan: ${currentSpecie.average_lifespan}</li>
-          <li>Language: ${currentSpecie.language}</li>
-          `
+    if (!loadingFetch) {
+      loadingFetch = true
+      planetsContainer.classList.remove("infoScroll")
+      removeUniqueClass("infoTabBtns")
+      speciesBtn.classList.add("infoTabBtns")
+      planetsContainer.innerHTML = '<div class="lds-dual-ring"></div>'
+      const currentSpecie = await getSpecies(char)
+      if (!currentSpecie) {
+        planetsContainer.innerHTML = `<h3>Unknown</h3>`
+      } else {
+        planetsContainer.innerHTML = `
+            <h3>Name: ${currentSpecie.name}</h3>
+            <li>classsification: ${currentSpecie.classification}</li>
+            <li>Designation: ${currentSpecie.designation}</li>
+            <li>Average height: ${currentSpecie.average_height}</li>
+            <li>Skin colors: ${currentSpecie.skin_colors}</li>
+            <li>Hair colors: ${currentSpecie.hair_colors}</li>
+            <li>Eye color: ${currentSpecie.eye_colors}</li>
+            <li>Average lifespan: ${currentSpecie.average_lifespan}</li>
+            <li>Language: ${currentSpecie.language}</li>
+            `
+      }
+      loadingFetch = false
     }
   })
 }
@@ -190,44 +197,49 @@ fetchVehicles = async (vehicle) => {
 }
 
 getVehicles = async (char) => {
-    let vehicle = char
-    let thisVehicle = vehicle.split("/")
-    console.log(thisVehicle)
-    const vehicleCounter = thisVehicle.splice(thisVehicle.length - 2, 1)
-    if (cachedVehicles[vehicleCounter]) {
-      return cachedVehicles[vehicleCounter]
-    } else {
-      const currentVehicle = await fetchVehicles(vehicle)
-      cachedVehicles[vehicleCounter] = currentVehicle
-      return cachedVehicles[vehicleCounter]
-    }
+  let vehicle = char
+  let thisVehicle = vehicle.split("/")
+  console.log(thisVehicle)
+  const vehicleCounter = thisVehicle.splice(thisVehicle.length - 2, 1)
+  if (cachedVehicles[vehicleCounter]) {
+    return cachedVehicles[vehicleCounter]
+  } else {
+    const currentVehicle = await fetchVehicles(vehicle)
+    cachedVehicles[vehicleCounter] = currentVehicle
+    return cachedVehicles[vehicleCounter]
+  }
 }
 
 renderVehicles = (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const vehiclesBtn = document.querySelector(".infoTabs button:nth-of-type(3)")
   vehiclesBtn.addEventListener("click", async () => {
-    removeUniqueClass("infoTabBtns")
-    vehiclesBtn.classList.add("infoTabBtns")
-    planetsContainer.innerHTML = ""
-    planetsContainer.classList.add("infoScroll")
-    if (char.vehicles.length > 0) {
-      for (const vehicle of char.vehicles) {
-        const currentVehicle = await getVehicles(vehicle)
-        planetsContainer.innerHTML += `
-            <h3>Name: ${currentVehicle.name} </h3>
-            <li>Model: ${currentVehicle.model} </li>
-            <li>Manufacturer: ${currentVehicle.manufacturer} </li>
-            <li>Cost in credits: ${currentVehicle.cost_in_credits} </li>
-            <li>Length: ${currentVehicle.length} </li>
-            <li>Max atmosphering speed: ${currentVehicle.max_atmosphering_speed} </li>
-            <li>Crew: ${currentVehicle.crew} </li>
-            <li>Passengers: ${currentVehicle.passengers} </li>
-            <li>Cargo capacity: ${currentVehicle.cargo_capacity} </li>
-            <li>Consumables: ${currentVehicle.consumables} </li>`
+    if (!loadingFetch) {
+      loadingFetch = true
+      removeUniqueClass("infoTabBtns")
+      vehiclesBtn.classList.add("infoTabBtns")
+      planetsContainer.innerHTML = ""
+      planetsContainer.classList.add("infoScroll")
+      if (char.vehicles.length > 0) {
+        for (const vehicle of char.vehicles) {
+          const currentVehicle = await getVehicles(vehicle)
+          planetsContainer.innerHTML += `
+              <h3>Name: ${currentVehicle.name} </h3>
+              <li>Model: ${currentVehicle.model} </li>
+              <li>Manufacturer: ${currentVehicle.manufacturer} </li>
+              <li>Cost in credits: ${currentVehicle.cost_in_credits} </li>
+              <li>Length: ${currentVehicle.length} </li>
+              <li>Max atmosphering speed: ${currentVehicle.max_atmosphering_speed} </li>
+              <li>Crew: ${currentVehicle.crew} </li>
+              <li>Passengers: ${currentVehicle.passengers} </li>
+              <li>Cargo capacity: ${currentVehicle.cargo_capacity} </li>
+              <li>Consumables: ${currentVehicle.consumables} </li>`
+        }
+      } else {
+        planetsContainer.classList.remove("infoScroll")
+        planetsContainer.innerHTML = `<h3>Unknown</h3>`
       }
-    } else {
-      planetsContainer.innerHTML = `<h3>Unknown</h3>`
+      loadingFetch = false
     }
   })
 }
@@ -243,51 +255,55 @@ fetchStarships = async (starship) => {
 }
 
 getStarships = async (ship) => {
-    let starship = ship
-    let thisStarship = starship.split("/")
-    console.log(thisStarship)
-    const starshipCounter = thisStarship.splice(thisStarship.length - 2, 1)
-    if (cachedVehicles[starshipCounter]) {
-      return cachedVehicles[starshipCounter]
-    } else {
-      const currentStarship = await fetchStarships(starship)
-      cachedStarships[starshipCounter] = currentStarship
-      return cachedStarships[starshipCounter]
-    }
+  let starship = ship
+  let thisStarship = starship.split("/")
+  const starshipCounter = thisStarship.splice(thisStarship.length - 2, 1)
+  if (cachedStarships[starshipCounter]) {
+    return cachedStarships[starshipCounter]
+  } else {
+    const currentStarship = await fetchStarships(starship)
+    cachedStarships[starshipCounter] = currentStarship
+    return cachedStarships[starshipCounter]
+  }
 }
 
 renderStarships = async (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const starShipBtn = document.querySelector(".infoTabs button:nth-of-type(4)")
   starShipBtn.addEventListener("click", async () => {
-    removeUniqueClass("infoTabBtns")
-    starShipBtn.classList.add("infoTabBtns")
-    planetsContainer.innerHTML = ""
-    planetsContainer.classList.add("infoScroll")
-    if(char.starships.length > 0){
-      for (const starship of char.starships) {
+    if (!loadingFetch) {
+      loadingFetch = true
+      removeUniqueClass("infoTabBtns")
+      starShipBtn.classList.add("infoTabBtns")
+      planetsContainer.innerHTML = ""
+      planetsContainer.classList.add("infoScroll")
+      if (char.starships.length > 0) {
+        for (const starship of char.starships) {
           const currentStarship = await getStarships(starship)
           planetsContainer.innerHTML += `
-          <h3>Name: ${currentStarship.name} </h3>
-          <li>Model: ${currentStarship.model} </li>
-          <li>Manufacturer: ${currentStarship.manufacturer} </li>
-          <li>Cost in credits: ${currentStarship.cost_in_credits} </li>
-          <li>Length: ${currentStarship.length} </li>
-          <li>Max atmosphering speed: ${currentStarship.max_atmosphering_speed} </li>
-          <li>Crew: ${currentStarship.crew} </li>
-          <li>Passengers: ${currentStarship.passengers} </li>
-          <li>Cargo capacity: ${currentStarship.cargo_capacity} </li>
-          <li>Consumables: ${currentStarship.consumables} </li>
-          <li>Hyperdrive rating: ${currentStarship.hyperdrive_rating} </li>
-          <li>MGLT: ${currentStarship.MGLT} </li>
-          <li>Starship Class: ${currentStarship.starship_class} </li>
-          `
+            <h3>Name: ${currentStarship.name} </h3>
+            <li>Model: ${currentStarship.model} </li>
+            <li>Manufacturer: ${currentStarship.manufacturer} </li>
+            <li>Cost in credits: ${currentStarship.cost_in_credits} </li>
+            <li>Length: ${currentStarship.length} </li>
+            <li>Max atmosphering speed: ${currentStarship.max_atmosphering_speed} </li>
+            <li>Crew: ${currentStarship.crew} </li>
+            <li>Passengers: ${currentStarship.passengers} </li>
+            <li>Cargo capacity: ${currentStarship.cargo_capacity} </li>
+            <li>Consumables: ${currentStarship.consumables} </li>
+            <li>Hyperdrive rating: ${currentStarship.hyperdrive_rating} </li>
+            <li>MGLT: ${currentStarship.MGLT} </li>
+            <li>Starship Class: ${currentStarship.starship_class} </li>
+            `
         }
       } else {
+        planetsContainer.classList.remove("infoScroll")
         planetsContainer.innerHTML = `<h3>Unknown</h3>`
       }
-    })
-  }
+      loadingFetch = false
+    }
+  })
+}
 
 paginator = () => {
   let counter = 1
@@ -295,26 +311,33 @@ paginator = () => {
   const nextBtn = document.querySelector(".nextBtn")
   const prevBtn = document.querySelector(".prevBtn")
   nextBtn.addEventListener("click", () => {
-    counter++
-    numberList.innerText++
-    if (counter >= 9) {
-      nextBtn.style.visibility = "hidden"
-    } else {
-      prevBtn.style.visibility = "visible"
+    if (!loadingFetch) {
+      loadingFetch = true
+      counter++
+      numberList.innerText++
+      if (counter >= 9) {
+        nextBtn.style.visibility = "hidden"
+      } else {
+        prevBtn.style.visibility = "visible"
+      }
+      renderCharacters(counter)
     }
-    renderCharacters(counter)
+    loadingFetch = false
   })
 
   prevBtn.addEventListener("click", () => {
-    counter--
-    numberList.innerText--
-    if (counter <= 1) {
-      prevBtn.style.visibility = "hidden"
+    if (!loadingFetch) {
+      loadingFetch = true
+      counter--
+      numberList.innerText--
+      if (counter <= 1) {
+        prevBtn.style.visibility = "hidden"
+      } else {
+        nextBtn.style.visibility = "visible"
+      }
+      renderCharacters(counter)
+      loadingFetch = false
     }
-    else {
-      nextBtn.style.visibility = "visible"
-    }
-    renderCharacters(counter)
   })
 }
 

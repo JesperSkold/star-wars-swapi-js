@@ -68,7 +68,7 @@ section:first-child {
 
 .characterBackground {
   background-color: rgb(87, 86, 86);
-  box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.6);
+  box-shadow: 0px 5px 1px 0px rgba(0,0,0,0.55);
   margin-bottom: 0.2rem;
 }
 
@@ -94,6 +94,23 @@ section:first-child {
 
 .infoScroll {
   overflow-y: scroll;
+}
+
+.planetInfo::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 1rem;
+  
+}
+.planetInfo::-webkit-scrollbar-track {
+  border-radius: 1rem;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  margin-top: 0.1rem;
+}
+
+
+
+.planetInfo::-webkit-scrollbar {
+  width: 1em;
 }
 
 .charDetails {
