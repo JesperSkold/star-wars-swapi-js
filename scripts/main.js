@@ -1,3 +1,7 @@
+renderSWQuote = () => {
+  document.querySelector(".starwarsQuote").innerHTML = '"'+randomSWQuote()+'"'
+}
+
 let loadingFetch = false
 const cachedCharacters = {}
 const cachedPlanets = {}
@@ -344,6 +348,6 @@ paginator = () => {
 main = () => {
   renderCharacters()
   paginator()
-
+  renderSWQuote()
 };
 main();

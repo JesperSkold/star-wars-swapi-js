@@ -14,9 +14,9 @@ header {
   background-size: auto 100vw;
   background-size: cover;
   display: flex;
-  align-items: center;
-  padding:6rem;
-  background-position: center center;
+  padding: 4.4rem;
+  background-position: bottom right;
+  flex-direction: column;
 }
 
 header h1 {
@@ -26,6 +26,7 @@ header h1 {
   color: rgb(240, 217, 9);
   font-size: 4rem;
   font-weight: 300;
+  margin-bottom: 1rem;
 }
 
 h2 {
@@ -226,4 +227,9 @@ justify-content: space-evenly;
 
 .infoTabs .infoTabBtns {
   background-color: grey;
+}
+
+.starwarsQuote {
+  color: rgb(240, 217, 9);
+  font-style: italic;
 }
