@@ -1,5 +1,6 @@
-renderSWQuote = () => {
-  document.querySelector(".starwarsQuote").innerHTML = '"'+randomSWQuote()+'"'
+import swQuotes from "../quote_module/swQuotes.js"
+const renderSWQuote = () => {
+  document.querySelector(".starwarsQuote").innerHTML = '"'+swQuotes()+'"'
 }
 
 let loadingFetch = false
@@ -9,7 +10,7 @@ const cachedSpecies = {}
 const cachedVehicles = {}
 const cachedStarships = {}
 
-fetchCharacters = async (counter = 1) => {
+const fetchCharacters = async (counter = 1) => {
   try {
     const response = await fetch(`https://swapi.dev/api/people/?page=${counter}`)
     const data = await response.json()
@@ -19,7 +20,7 @@ fetchCharacters = async (counter = 1) => {
   }
 }
 
-getCharacters = async (counter = 1) => {
+const getCharacters = async (counter = 1) => {
   if (cachedCharacters[counter]) {
     return cachedCharacters[counter]
   } else {
@@ -29,7 +30,7 @@ getCharacters = async (counter = 1) => {
   }
 }
 
-renderCharacters = async (counter) => {
+const renderCharacters = async (counter) => {
   const characterList = document.querySelector(".characters");
   characterList.innerHTML = '<div class="lds-dual-ring"></div>'
   const currentCharacters = await getCharacters(counter)
@@ -48,13 +49,13 @@ renderCharacters = async (counter) => {
   }
 }
 
-removeUniqueClass = (className) => {
+const removeUniqueClass = (className) => {
   if (document.querySelector("." + className)) {
     document.querySelector("." + className).classList.remove(className)
   }
 }
 
-renderCharInfo = (char) => {
+const renderCharInfo = (char) => {
   const charContainer = document.querySelector(".charDetails")
   charContainer.innerHTML = '<div class="lds-dual-ring"></div>'
   charContainer.innerHTML = ""
@@ -77,7 +78,7 @@ renderCharInfo = (char) => {
   renderStarships(char)
 }
 
-renderInfoTabs = () => {
+const renderInfoTabs = () => {
   document.querySelector(".infoTabs").innerHTML = `
     <button>Planet</button>
     <button>Species</button>
@@ -86,7 +87,7 @@ renderInfoTabs = () => {
     `
 }
 
-fetchPlanet = async (char) => {
+const fetchPlanet = async (char) => {
   try {
     const response = await fetch(char.homeworld)
     const data = await response.json()
@@ -96,7 +97,7 @@ fetchPlanet = async (char) => {
   }
 }
 
-getPlanets = async (char) => {
+const getPlanets = async (char) => {
   let planet = char.homeworld.split("/")
   const planetCounter = planet.splice(planet.length - 2, 1)
   if (cachedPlanets[planetCounter]) {
@@ -108,7 +109,7 @@ getPlanets = async (char) => {
   }
 }
 
-renderPlanet = async (char) => {
+const renderPlanet = async (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const planetBtn = document.querySelector(".infoTabs button:nth-of-type(1)")
   planetBtn.classList.add("infoTabBtns")
@@ -135,7 +136,8 @@ renderPlanet = async (char) => {
   document.querySelector(".infoTabs button:nth-of-type(1)").click()
 }
 
-fetchSpecies = async (char) => {
+
+const fetchSpecies = async (char) => {
   try {
     const response = await fetch(char.species)
     const data = await response.json()
@@ -145,7 +147,7 @@ fetchSpecies = async (char) => {
   }
 }
 
-getSpecies = async (char) => {
+const getSpecies = async (char) => {
   if (char.species.length > 0) {
     let specie = char.species[0].split("/")
     const specieCounter = specie.splice(specie.length - 2, 1)
@@ -159,7 +161,7 @@ getSpecies = async (char) => {
   }
 }
 
-renderSpecies = async (char) => {
+const renderSpecies = async (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const speciesBtn = document.querySelector(".infoTabs button:nth-of-type(2)")
   speciesBtn.addEventListener("click", async () => {
@@ -190,7 +192,7 @@ renderSpecies = async (char) => {
   })
 }
 
-fetchVehicles = async (vehicle) => {
+const fetchVehicles = async (vehicle) => {
   try {
     const response = await fetch(vehicle)
     const data = await response.json()
@@ -200,7 +202,7 @@ fetchVehicles = async (vehicle) => {
   }
 }
 
-getVehicles = async (char) => {
+const getVehicles = async (char) => {
   let vehicle = char
   let thisVehicle = vehicle.split("/")
   console.log(thisVehicle)
@@ -214,7 +216,7 @@ getVehicles = async (char) => {
   }
 }
 
-renderVehicles = (char) => {
+const renderVehicles = (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const vehiclesBtn = document.querySelector(".infoTabs button:nth-of-type(3)")
   vehiclesBtn.addEventListener("click", async () => {
@@ -248,17 +250,8 @@ renderVehicles = (char) => {
   })
 }
 
-fetchStarships = async (starship) => {
-  try {
-    const response = await fetch(starship)
-    const data = await response.json()
-    return data
-  } catch (error) {
-    console.error(error)
-  }
-}
 
-getStarships = async (ship) => {
+const getStarships = async (ship) => {
   let starship = ship
   let thisStarship = starship.split("/")
   const starshipCounter = thisStarship.splice(thisStarship.length - 2, 1)
@@ -271,7 +264,7 @@ getStarships = async (ship) => {
   }
 }
 
-renderStarships = async (char) => {
+const renderStarships = async (char) => {
   const planetsContainer = document.querySelector(".planetInfo")
   const starShipBtn = document.querySelector(".infoTabs button:nth-of-type(4)")
   starShipBtn.addEventListener("click", async () => {
@@ -285,20 +278,20 @@ renderStarships = async (char) => {
         for (const starship of char.starships) {
           const currentStarship = await getStarships(starship)
           planetsContainer.innerHTML += `
-            <h3>Name: ${currentStarship.name} </h3>
-            <li>Model: ${currentStarship.model} </li>
-            <li>Manufacturer: ${currentStarship.manufacturer} </li>
-            <li>Cost in credits: ${currentStarship.cost_in_credits} </li>
-            <li>Length: ${currentStarship.length} </li>
-            <li>Max atmosphering speed: ${currentStarship.max_atmosphering_speed} </li>
-            <li>Crew: ${currentStarship.crew} </li>
-            <li>Passengers: ${currentStarship.passengers} </li>
-            <li>Cargo capacity: ${currentStarship.cargo_capacity} </li>
-            <li>Consumables: ${currentStarship.consumables} </li>
-            <li>Hyperdrive rating: ${currentStarship.hyperdrive_rating} </li>
-            <li>MGLT: ${currentStarship.MGLT} </li>
-            <li>Starship Class: ${currentStarship.starship_class} </li>
-            `
+          <h3>Name: ${currentStarship.name} </h3>
+          <li>Model: ${currentStarship.model} </li>
+          <li>Manufacturer: ${currentStarship.manufacturer} </li>
+          <li>Cost in credits: ${currentStarship.cost_in_credits} </li>
+          <li>Length: ${currentStarship.length} </li>
+          <li>Max atmosphering speed: ${currentStarship.max_atmosphering_speed} </li>
+          <li>Crew: ${currentStarship.crew} </li>
+          <li>Passengers: ${currentStarship.passengers} </li>
+          <li>Cargo capacity: ${currentStarship.cargo_capacity} </li>
+          <li>Consumables: ${currentStarship.consumables} </li>
+          <li>Hyperdrive rating: ${currentStarship.hyperdrive_rating} </li>
+          <li>MGLT: ${currentStarship.MGLT} </li>
+          <li>Starship Class: ${currentStarship.starship_class} </li>
+          `
         }
       } else {
         planetsContainer.classList.remove("infoScroll")
@@ -308,8 +301,17 @@ renderStarships = async (char) => {
     }
   })
 }
+const fetchStarships = async (starship) => {
+try {
+  const response = await fetch(starship)
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+}
 
-paginator = () => {
+const paginator = () => {
   let counter = 1
   const numberList = document.querySelector(".numberList")
   const nextBtn = document.querySelector(".nextBtn")
@@ -345,7 +347,7 @@ paginator = () => {
   })
 }
 
-main = () => {
+const main = () => {
   renderCharacters()
   paginator()
   renderSWQuote()

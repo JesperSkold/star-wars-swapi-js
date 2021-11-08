@@ -20,7 +20,5 @@
     "url": "https://github.com/JesperSkold/slutprojekt-native-javascript/issues"
   },
   "homepage": "https://github.com/JesperSkold/slutprojekt-native-javascript#readme",
-  "dependencies": {
-    "starwars": "^1.0.1"
-  }
+  "dependencies": {}
 }
