@@ -62,8 +62,8 @@ const renderCharInfo = (char) => {
   charContainer.insertAdjacentHTML("beforeend", `
     <h3>${char.name}</h3>`)
   charContainer.insertAdjacentHTML("beforeend", `
-    <li>Height: ${char.height}cm</li>
-    <li>Mass: ${char.mass}kg</li>
+    <li>Height: ${char.height} cm</li>
+    <li>Mass: ${char.mass} kg</li>
     <li>Hair color: ${char.hair_color}</li>
     <li>Skin color: ${char.skin_color}</li>
     <li>Eye color: ${char.eye_color}</li>
