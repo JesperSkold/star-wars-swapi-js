@@ -110,7 +110,7 @@ const getPlanets = async (char) => {
 }
 
 const renderPlanet = async (char) => {
-  const planetsContainer = document.querySelector(".planetInfo")
+  const planetsContainer = document.querySelector(".charInfo")
   const planetBtn = document.querySelector(".infoTabs button:nth-of-type(1)")
   planetBtn.classList.add("infoTabBtns")
   planetBtn.addEventListener("click", async () => {
@@ -162,7 +162,7 @@ const getSpecies = async (char) => {
 }
 
 const renderSpecies = async (char) => {
-  const planetsContainer = document.querySelector(".planetInfo")
+  const planetsContainer = document.querySelector(".charInfo")
   const speciesBtn = document.querySelector(".infoTabs button:nth-of-type(2)")
   speciesBtn.addEventListener("click", async () => {
     if (!loadingFetch) {
@@ -217,7 +217,7 @@ const getVehicles = async (char) => {
 }
 
 const renderVehicles = (char) => {
-  const planetsContainer = document.querySelector(".planetInfo")
+  const planetsContainer = document.querySelector(".charInfo")
   const vehiclesBtn = document.querySelector(".infoTabs button:nth-of-type(3)")
   vehiclesBtn.addEventListener("click", async () => {
     if (!loadingFetch) {
@@ -265,7 +265,7 @@ const getStarships = async (ship) => {
 }
 
 const renderStarships = async (char) => {
-  const planetsContainer = document.querySelector(".planetInfo")
+  const planetsContainer = document.querySelector(".charInfo")
   const starShipBtn = document.querySelector(".infoTabs button:nth-of-type(4)")
   starShipBtn.addEventListener("click", async () => {
     if (!loadingFetch) {
